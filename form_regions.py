@@ -85,10 +85,5 @@ if __name__ == '__main__':
             subsubvalue = list(subvalue)
             print_rectangle(subsubvalue, color_list, mask_color_id, cv2, img2) 
             mask_color_id += 1
-            
-        cv2.imwrite('output_groups_.png', img)
-        cv2.imwrite('output_groups_2.png', img2)
-    # img = cv2.resize(img, (1024, 1024))
-    # cv2.imshow('img', img)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
+        cv2.imwrite('output_groups_' + str(mask_color_id) + '.png', img2)
+    cv2.imwrite('output_groups_.png', img)
