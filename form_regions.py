@@ -19,7 +19,7 @@ def assign_labels(boxes, labels):
         box['region'] = labels[i]
     return boxes
 
-count = 20
+count = 0
 max_count = 20
 
 def vertical_more_imp(u, v):
@@ -31,7 +31,7 @@ if __name__ == '__main__':
     X = preprocessing.StandardScaler().fit_transform(centroids)
     global count
     global max_count
-    while count <= max_count:
+    while count < max_count:
         img = cv2.imread("img/input.png")
         distances = pairwise_distances(X, metric = vertical_more_imp)
         db = cluster.DBSCAN(eps=0.15, min_samples=1, n_jobs=-3, metric='precomputed').fit(distances)
