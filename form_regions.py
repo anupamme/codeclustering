@@ -27,7 +27,7 @@ def vertical_more_imp(u, v):
     global max_count
     coeff_x = (float)(count/max_count)
     coeff_y = 1 - (float)(count/max_count)
-    print('coeff x, y: ' + str(coeff_x) + ' : ' + str(coeff_y))
+#    print('coeff x, y: ' + str(coeff_x) + ' : ' + str(coeff_y))
     return coeff_x * 2 * np.power(u[0] - v[0],2) + coeff_y * 2 * np.power(u[1] - v[1],2)
 
 if __name__ == '__main__':
@@ -37,7 +37,7 @@ if __name__ == '__main__':
     global count
     global max_count
     while count < max_count:
-        img = cv2.imread("img/input.png")
+        img = cv2.imread("img/1.jpg")
         print('count, max_count: ' + str(count) + ' : ' + str(max_count))
         distances = pairwise_distances(X, metric = vertical_more_imp)
         db = cluster.DBSCAN(eps=0.15, min_samples=1, n_jobs=-3, metric='precomputed').fit(distances)
