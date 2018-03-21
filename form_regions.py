@@ -37,7 +37,7 @@ if __name__ == '__main__':
     global count
     global max_count
     while count < max_count:
-        img = cv2.imread("img/1.jpg")
+        img = cv2.imread("img/2.jpg")
         print('count, max_count: ' + str(count) + ' : ' + str(max_count))
         distances = pairwise_distances(X, metric = vertical_more_imp)
         db = cluster.DBSCAN(eps=0.15, min_samples=1, n_jobs=-3, metric='precomputed').fit(distances)
