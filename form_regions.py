@@ -23,7 +23,10 @@ count = 0
 max_count = 20
 
 def vertical_more_imp(u, v):
-    return np.sqrt( ((float)(count/max_count)) * 2 * np.power(u[0] - v[0],2) + (1 - (float)(count/max_count)) * 2 * np.power(u[1] - v[1],2))
+    coeff_x = (float)(count/max_count)
+    coeff_y = 1 - (float)(count/max_count)
+    print('coeff x, y: ' + str(coeff_x) + ' : ' + str(coeff_y))
+    return coeff_x * 2 * np.power(u[0] - v[0],2) + coeff_y * 2 * np.power(u[1] - v[1],2)
 
 if __name__ == '__main__':
     boxes = json.load(open('result.json', 'r'))['text_lines']
