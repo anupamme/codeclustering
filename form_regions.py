@@ -33,8 +33,8 @@ def vertical_more_imp(u, v):
 def balanced(u, v):
     global count
     global max_count
-    coeff_x = 0.45
-    coeff_y = 0.55
+    coeff_x = 0.55
+    coeff_y = 0.45
 #    print('coeff x, y: ' + str(coeff_x) + ' : ' + str(coeff_y))
     return np.sqrt(coeff_x * 2 * np.power(u[0] - v[0],2) + coeff_y * 2 * np.power(u[1] - v[1],2))
 
