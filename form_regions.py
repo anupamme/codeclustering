@@ -20,17 +20,19 @@ def assign_labels(boxes, labels):
     return boxes
 
 count = 0
+max_count = 20
 
 def vertical_more_imp(u, v):
-    return np.sqrt( ((float)(count/20)) * 2 * np.power(u[0] - v[0],2) + (1 - (float)(count/20)) * 2 * np.power(u[1] - v[1],2))
+    return np.sqrt( ((float)(count/max_count)) * 2 * np.power(u[0] - v[0],2) + (1 - (float)(count/max_count)) * 2 * np.power(u[1] - v[1],2))
 
 if __name__ == '__main__':
     boxes = json.load(open('result.json', 'r'))['text_lines']
-    img = cv2.imread("input.png")
     centroids = get_centroids(boxes)
     X = preprocessing.StandardScaler().fit_transform(centroids)
     global count
-    while count < 20:
+    global max_count
+    while count < max_count:
+        img = cv2.imread("img/input.png")
         distances = pairwise_distances(X, metric = vertical_more_imp)
         db = cluster.DBSCAN(eps=0.15, min_samples=1, n_jobs=-3, metric='precomputed').fit(distances)
         labels = db.labels_
