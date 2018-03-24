@@ -43,7 +43,7 @@ if __name__ == "__main__":
     img_dir = 'img/*.jpg'
     images_list = glob.glob(img_dir)
     for img in images_list:
-        abs_path = os.path.join('img', img)
-        boxes = call_ocr_api(abs_path)
+#        abs_path = os.path.join('img', img)
+        boxes = call_ocr_api(img)
         do_clustering(boxes, img)
     
