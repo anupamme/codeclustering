@@ -37,7 +37,7 @@ def call_ocr_api(img_name):
     url = 'http://ocr.callup.ai/ocr'
     response = requests.post(url, files={'image': ('tmp', open(img_name, 'rb'), 'image/jpeg', {'Expires': '0'})})
     res_json = json.loads(response.text)
-    return res_json['text_lines']
+    return res_json
 
 if __name__ == "__main__":
     # iterate all images in img directory
