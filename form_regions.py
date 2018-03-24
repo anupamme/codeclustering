@@ -33,8 +33,8 @@ def vertical_more_imp(u, v):
 def balanced(u, v):
     global count
     global max_count
-    coeff_x = 0.55
-    coeff_y = 0.45
+    coeff_x = 0.25
+    coeff_y = 0.75
 #    print('coeff x, y: ' + str(coeff_x) + ' : ' + str(coeff_y))
     return np.sqrt(coeff_x * 2 * np.power(u[0] - v[0],2) + coeff_y * 2 * np.power(u[1] - v[1],2))
 
@@ -60,9 +60,9 @@ def print_rectangle(value, color_list, mask_color_id, cv2, img):
     color = list(map(int, color))
     cv2.rectangle(img, tl, br, color, 3)
 
-if __name__ == '__main__':
+def call(input_data: dict, img_name: str):
     color_list = colormap(rgb=True)
-    boxes = json.load(open('result.json', 'r'))['text_lines']
+    boxes = input_data['text_lines']
     img, db = do_db_scan(boxes, 0)
     labels = db.labels_
     # print(labels)
@@ -85,5 +85,5 @@ if __name__ == '__main__':
             subsubvalue = list(subvalue)
             print_rectangle(subsubvalue, color_list, mask_color_id, cv2, img2) 
             mask_color_id += 1
-        cv2.imwrite('output_groups_' + str(mask_color_id) + '.png', img2)
-    cv2.imwrite('output_groups_.png', img)
+        cv2.imwrite(img_name + str(mask_color_id) + '.png', img2)
+    cv2.imwrite(img_name + '.png', img)
