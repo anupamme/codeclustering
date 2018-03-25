@@ -68,7 +68,7 @@ def call(input_data: dict, img_name: str):
         value = list(value)
         print_rectangle(value, color_list, mask_color_id, cv2, img)        
         mask_color_id += 1
-
+        
         # do next clustering
         img2, db2 = do_db_scan(value, 1, img_name)
         labels2 = db2.labels_
@@ -84,4 +84,4 @@ def call(input_data: dict, img_name: str):
     
 if __name__ == "__main__":
     data = json.loads(open('result.json', 'r').read())
-    call(data, 'test')
+    call(data, '4.jpg')
