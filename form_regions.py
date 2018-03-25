@@ -6,6 +6,7 @@ from operator import itemgetter
 import cv2
 from utils import colormap
 from sklearn.metrics import pairwise_distances
+import random
 
 def get_centroids(boxes):
     centroids = []
