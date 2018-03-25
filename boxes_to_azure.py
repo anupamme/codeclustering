@@ -70,6 +70,7 @@ def merge_adjacent (clusters, is_vertical):
                 last_cl['polygons'] = last_cl['polygons'] + cl['polygons']
                 last_cl['bottom_right'] = (max(last_cl['bottom_right'][0], cl['bottom_right'][0]), 
                                             max(last_cl['bottom_right'][1], cl['bottom_right'][1]))
+                point_b = last_cl['bottom_right'][is_vertical]
             else:
                 res.append(cl)
         else:
