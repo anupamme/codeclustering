@@ -83,5 +83,5 @@ def call(input_data: dict, img_name: str):
     cv2.imwrite(img_name + '.png', img)
     
 if __name__ == "__main__":
-    data = json.loads(open('result.json', 'r').read())
+    data = json.loads(open('4.json', 'r').read())
     call(data, '4.jpg')
