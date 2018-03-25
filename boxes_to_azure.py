@@ -21,7 +21,7 @@ import json
 
 import form_regions as form
 
-font_dim = [17, 23]
+font_dim = [0, 29]
 
 '''
 1. sort the clusters vertically
