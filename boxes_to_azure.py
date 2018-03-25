@@ -21,7 +21,7 @@ import json
 
 import form_regions as form
 
-font_dim = [5, 7]
+font_dim = [1, 2]
 
 '''
 1. sort the clusters vertically
@@ -65,7 +65,7 @@ def merge_adjacent (clusters, is_vertical):
         point_t = cl['top_left'][is_vertical]
         point_b = cl['bottom_right'][is_vertical]
         if parent_cl_bottom != None:
-            if point_t - parent_cl_bottom < font_dim[is_vertical]:
+            if abs(point_t - parent_cl_bottom) < font_dim[is_vertical]:
                 last_cl = res[-1]
                 last_cl['polygons'] = last_cl['polygons'] + cl['polygons']
                 last_cl['bottom_right'] = [max(last_cl['bottom_right'][0], cl['bottom_right'][0]), 
