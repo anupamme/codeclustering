@@ -66,7 +66,7 @@ def call(input_data: dict, img_name: str):
     print("Number of cluster is {:2d}".format(len(set(db.labels_))))
     for key, value in itertools.groupby(boxes, key=itemgetter('region')):
         value = list(value)
-        print_rectangle(value, color_list, mask_color_id, cv2, img)        
+        print_rectangle(value, color_list, mask_color_id, cv2, img)
         mask_color_id += 1
         
         # do next clustering
