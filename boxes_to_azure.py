@@ -21,7 +21,7 @@ import json
 
 import form_regions as form
 
-font_dim = [1, 2]
+font_dim = [17, 23]
 
 '''
 1. sort the clusters vertically
@@ -79,6 +79,7 @@ def merge_adjacent (clusters, is_vertical):
 
 def merge_cluster(clusters: list):
     # sort vertically
+    
     clusters.sort(key=lambda x: x['top_left'][1])
     # merge composite
     clusters_composite = merge_composite(clusters)
@@ -107,6 +108,7 @@ if __name__ == "__main__":
     data = json.loads(open('4.json', 'r').read())
     outer, inner = form.call(data, '4.jpg')
     inner_compact = merge_cluster(inner)
+    form.print('4.jpg', inner_compact)
 #    img_dir = 'img/*.jpg'
 #    images_list = glob.glob(img_dir)
 #    for img in images_list:

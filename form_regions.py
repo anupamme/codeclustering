@@ -57,6 +57,18 @@ def print_rectangle(value, color_list, mask_color_id, cv2, img):
     color = list(map(int, color))
     cv2.rectangle(img, tl, br, color, 3)
     
+def print_clusters(img_file, clusters):
+    img = cv2.imread(img_file)
+    color_list = colormap(rgb=True)
+    for cl in clusters:
+        tl, br = cl['top_left'], cl['bottom_right']
+        color = color_list[random.randint(0, len(color_list)), 0:3]
+        color = list(map(int, color))
+        cv2.rectangle(img, tl, br, color, 3)
+    cv2.imwrite(img_name + '.png', img)
+    
+    
+    
 def create_obj(tl, br, value: list):
     return {
         'top_left': tl,
@@ -102,10 +114,9 @@ def call(input_data: dict, img_name: str):
 if __name__ == "__main__":
     data = json.loads(open('4.json', 'r').read())
     outer, inner = call(data, '4.jpg')
-    f = open('outer.json', 'w')
-    f.write(json.dumps(outer))
-    f.close()
-    f = open('inner.json', 'w')
-    f.write(json.dumps(inner))
-    f.close()
-    
+#    f = open('outer.json', 'w')
+#    f.write(json.dumps(outer))
+#    f.close()
+#    f = open('inner.json', 'w')
+#    f.write(json.dumps(inner))
+#    f.close()
