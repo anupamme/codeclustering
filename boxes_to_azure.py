@@ -68,8 +68,8 @@ def merge_adjacent (clusters, is_vertical):
             if abs(point_t - parent_cl_bottom) < font_dim[is_vertical]:
                 last_cl = res[-1]
                 last_cl['polygons'] = last_cl['polygons'] + cl['polygons']
-                last_cl['bottom_right'] = [max(last_cl['bottom_right'][0], cl['bottom_right'][0]), 
-                                            max(last_cl['bottom_right'][1], cl['bottom_right'][1])]
+                last_cl['bottom_right'] = (max(last_cl['bottom_right'][0], cl['bottom_right'][0]), 
+                                            max(last_cl['bottom_right'][1], cl['bottom_right'][1]))
             else:
                 res.append(cl)
         else:

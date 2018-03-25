@@ -66,7 +66,7 @@ def print_clusters(img_file, clusters):
         color = color_list[random.randint(0, len(color_list)), 0:3]
         color = list(map(int, color))
         cv2.rectangle(img, tl, br, color, 3)
-    cv2.imwrite(img_name + '.png', img)
+    cv2.imwrite(img_file + '.png', img)
     
     
     
