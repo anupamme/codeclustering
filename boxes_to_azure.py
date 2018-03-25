@@ -21,7 +21,7 @@ import json
 
 import form_regions as form
 
-font_dim = [17, 0]
+font_dim = [0, 17]
 
 '''
 1. sort the clusters vertically
@@ -59,6 +59,7 @@ def merge_composite(clusters):
     return res
             
 def merge_adjacent (clusters, is_vertical):
+    clusters.sort(key=lambda x: x['top_left'][is_vertical])
     parent_cl_bottom = None
     res = []
     for cl in clusters:
