@@ -38,10 +38,10 @@ def balanced(u, v):
 #    print('coeff x, y: ' + str(coeff_x) + ' : ' + str(coeff_y))
     return np.sqrt(coeff_x * 2 * np.power(u[0] - v[0],2) + coeff_y * 2 * np.power(u[1] - v[1],2))
 
-def do_db_scan(boxes, index):
+def do_db_scan(boxes, index, img_name):
     centroids = get_centroids(boxes)
     X = preprocessing.StandardScaler().fit_transform(centroids)
-    img = cv2.imread("img/input.png")
+    img = cv2.imread(img_name)
     if index == 0:
         distances = pairwise_distances(X, metric = vertical_more_imp)
     elif index == 1:
@@ -63,7 +63,7 @@ def print_rectangle(value, color_list, mask_color_id, cv2, img):
 def call(input_data: dict, img_name: str):
     color_list = colormap(rgb=True)
     boxes = input_data['text_lines']
-    img, db = do_db_scan(boxes, 0)
+    img, db = do_db_scan(boxes, 0, img_name)
     labels = db.labels_
     # print(labels)
     boxes = assign_labels(boxes, labels)
