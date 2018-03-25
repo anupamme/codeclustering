@@ -78,8 +78,8 @@ def merge_adjacent (clusters, is_vertical):
             if abs(point_t - parent_cl_bottom[is_vertical]) < font_dim[is_vertical]:
                 _point_t = cl['top_left'][flip_binary(is_vertical)]
                 _point_b = cl['bottom_right'][flip_binary(is_vertical)]
-                if abs(_point_t - parent_cl_top[flip_binary(is_vertical)]) <                font_dim[flip_binary(is_vertical)] 
-                and abs(_point_b - parent_cl_bottom[flip_binary(is_vertical)]) <    font_dim[flip_binary(is_vertical)]:
+                if abs(_point_t - parent_cl_top[flip_binary(is_vertical)]) < font_dim[flip_binary(is_vertical)] 
+                and abs(_point_b - parent_cl_bottom[flip_binary(is_vertical)]) < font_dim[flip_binary(is_vertical)]:
                         last_cl = res[-1]
                         last_cl['polygons'] = last_cl['polygons'] + cl['polygons']
                         last_cl['bottom_right'] = (max(last_cl['bottom_right'][0], cl['bottom_right'][0]), 
