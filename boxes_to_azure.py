@@ -21,7 +21,7 @@ import json
 
 import form_regions as form
 
-font_dim = [0, 39]
+font_dim = [13, 13]
 
 '''
 1. sort the clusters vertically
@@ -57,26 +57,40 @@ def merge_composite(clusters):
         parent_cl_top = top_l
         parent_cl_bottom = bottom_r
     return res
-            
+    
+def flip_binary(num):
+    if num == 0:
+        return 1
+    elif num == 1:
+        return 0
+    else:
+        raise Exception()
+    
 def merge_adjacent (clusters, is_vertical):
     clusters.sort(key=lambda x: x['top_left'][is_vertical])
     parent_cl_bottom = None
+    parent_cl_top = None
     res = []
     for cl in clusters:
         point_t = cl['top_left'][is_vertical]
         point_b = cl['bottom_right'][is_vertical]
         if parent_cl_bottom != None:
-            if abs(point_t - parent_cl_bottom) < font_dim[is_vertical]:
-                last_cl = res[-1]
-                last_cl['polygons'] = last_cl['polygons'] + cl['polygons']
-                last_cl['bottom_right'] = (max(last_cl['bottom_right'][0], cl['bottom_right'][0]), 
-                                            max(last_cl['bottom_right'][1], cl['bottom_right'][1]))
-                point_b = last_cl['bottom_right'][is_vertical]
+            if abs(point_t - parent_cl_bottom[is_vertical]) < font_dim[is_vertical]:
+                _point_t = cl['top_left'][flip_binary(is_vertical)]
+                _point_b = cl['bottom_right'][flip_binary(is_vertical)]
+                if abs(_point_t - parent_cl_top[flip_binary(is_vertical)]) <                font_dim[flip_binary(is_vertical)] 
+                and abs(_point_b - parent_cl_bottom[flip_binary(is_vertical)]) <    font_dim[flip_binary(is_vertical)]:
+                        last_cl = res[-1]
+                        last_cl['polygons'] = last_cl['polygons'] + cl['polygons']
+                        last_cl['bottom_right'] = (max(last_cl['bottom_right'][0], cl['bottom_right'][0]), 
+                                                    max(last_cl['bottom_right'][1], cl['bottom_right'][1]))
+#                        point_b = last_cl['bottom_right'][is_vertical]
             else:
                 res.append(cl)
         else:
             res.append(cl)
-        parent_cl_bottom = point_b
+        parent_cl_bottom = cl['bottom_right']
+        parent_cl_top = cl['top_left']
     return res
 
 def merge_cluster(clusters: list):
