@@ -19,20 +19,13 @@ def assign_labels(boxes, labels):
         box['region'] = labels[i]
     return boxes
 
-count = 0
-max_count = 20
-
 def vertical_more_imp(u, v):
-    global count
-    global max_count
     coeff_x = 0
     coeff_y = 1
 #    print('coeff x, y: ' + str(coeff_x) + ' : ' + str(coeff_y))
     return np.sqrt(coeff_x * 2 * np.power(u[0] - v[0],2) + coeff_y * 2 * np.power(u[1] - v[1],2))
 
 def balanced(u, v):
-    global count
-    global max_count
     coeff_x = 0.25
     coeff_y = 0.75
 #    print('coeff x, y: ' + str(coeff_x) + ' : ' + str(coeff_y))
@@ -69,6 +62,7 @@ def call(input_data: dict, img_name: str):
     boxes = assign_labels(boxes, labels)
     boxes = sorted(boxes, key=itemgetter('region'))
     mask_color_id = 0
+    regions = []
     print("Number of cluster is {:2d}".format(len(set(db.labels_))))
     for key, value in itertools.groupby(boxes, key=itemgetter('region')):
         value = list(value)
@@ -87,3 +81,7 @@ def call(input_data: dict, img_name: str):
             mask_color_id += 1
         cv2.imwrite(img_name + str(mask_color_id) + '.png', img2)
     cv2.imwrite(img_name + '.png', img)
+    
+if __name__ == "__main__":
+    data = json.loads(open('result.json', 'r').read())
+    call(data, 'test')
