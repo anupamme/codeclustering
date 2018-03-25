@@ -101,4 +101,11 @@ def call(input_data: dict, img_name: str):
     
 if __name__ == "__main__":
     data = json.loads(open('4.json', 'r').read())
-    call(data, '4.jpg')
+    outer, inner = call(data, '4.jpg')
+    f = open('outer.json', w)
+    f.write(json.dumps(outer))
+    f.close()
+    f = open('inner.json', w)
+    f.write(json.dumps(inner))
+    f.close()
+    
