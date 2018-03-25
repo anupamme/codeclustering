@@ -104,9 +104,12 @@ def call_ocr_api(img_name):
     return res_json
 
 if __name__ == "__main__":
-    img_dir = 'img/*.jpg'
-    images_list = glob.glob(img_dir)
-    for img in images_list:
-        boxes = call_ocr_api(img)
-        do_clustering(boxes, img)
+    data = json.loads(open('4.json', 'r').read())
+    outer, inner = form.call(data, '4.jpg')
+    inner_compact = merge_cluster(inner)
+#    img_dir = 'img/*.jpg'
+#    images_list = glob.glob(img_dir)
+#    for img in images_list:
+#        boxes = call_ocr_api(img)
+#        do_clustering(boxes, img)
     
