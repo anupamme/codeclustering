@@ -108,7 +108,7 @@ if __name__ == "__main__":
     data = json.loads(open('4.json', 'r').read())
     outer, inner = form.call(data, '4.jpg')
     inner_compact = merge_cluster(inner)
-    form.print('4.jpg', inner_compact)
+    form.print_clusters('4.jpg', inner_compact)
 #    img_dir = 'img/*.jpg'
 #    images_list = glob.glob(img_dir)
 #    for img in images_list:
