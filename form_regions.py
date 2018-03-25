@@ -76,7 +76,7 @@ def call(input_data: dict, img_name: str):
         mask_color_id += 1
 
         # do next clustering
-        img2, db2 = do_db_scan(value, 1)
+        img2, db2 = do_db_scan(value, 1, img_name)
         labels2 = db2.labels_
         value = assign_labels(value, labels2)
         value = sorted(value, key=itemgetter('region'))
