@@ -42,16 +42,27 @@ def do_db_scan(boxes, index, img_name):
     db = cluster.DBSCAN(eps=0.15, min_samples=1, n_jobs=-3, metric='precomputed').fit(distances)
     return img, db
 
-def print_rectangle(value, color_list, mask_color_id, cv2, img):
+def calculate_boundaries(value: list):
     left_xs = min(map(lambda x: int(np.round(x['x0'])), value))
     right_xs = max(map(lambda x: int(np.round(x['x2'])), value))
     top_ys = min(map(lambda x: int(np.round(x['y0'])), value))
     bottom_ys = max(map(lambda x: int(np.round(x['y2'])), value))
     tl = (left_xs, top_ys)
     br = (right_xs, bottom_ys)
+    return tl, br
+
+def print_rectangle(value, color_list, mask_color_id, cv2, img):
+    tl, br = calculate_boundaries(value)
     color = color_list[mask_color_id % len(color_list), 0:3]
     color = list(map(int, color))
     cv2.rectangle(img, tl, br, color, 3)
+    
+def create_obj(tl, br, value: list):
+    return {
+        'top_left': tl,
+        'bottom_right': br,
+        'polygons': value
+    }
 
 def call(input_data: dict, img_name: str):
     color_list = colormap(rgb=True)
@@ -62,12 +73,15 @@ def call(input_data: dict, img_name: str):
     boxes = assign_labels(boxes, labels)
     boxes = sorted(boxes, key=itemgetter('region'))
     mask_color_id = 0
-    regions = []
+    outer_list = []
+    inner_list = []
     print("Number of cluster is {:2d}".format(len(set(db.labels_))))
     for key, value in itertools.groupby(boxes, key=itemgetter('region')):
         value = list(value)
-        print_rectangle(value, color_list, mask_color_id, cv2, img)
-        mask_color_id += 1
+        tl, br = calculate_boundaries(value)
+        outer_list.append(create_obj(tl, br, value))
+#        print_rectangle(value, color_list, mask_color_id, cv2, img)
+#        mask_color_id += 1
         
         # do next clustering
         img2, db2 = do_db_scan(value, 1, img_name)
@@ -77,10 +91,13 @@ def call(input_data: dict, img_name: str):
         print("Number of cluster is {:2d}".format(len(set(db2.labels_))))
         for subkey, subvalue in itertools.groupby(value, key=itemgetter('region')):
             subsubvalue = list(subvalue)
-            print_rectangle(subsubvalue, color_list, mask_color_id, cv2, img2) 
-            mask_color_id += 1
-        cv2.imwrite(img_name + str(mask_color_id) + '.png', img2)
-    cv2.imwrite(img_name + '.png', img)
+            tl_i, br_i = calculate_boundaries(subsubvalue)
+            inner_list.append(create_obj(tl_i, br_i, subsubvalue))
+#            print_rectangle(subsubvalue, color_list, mask_color_id, cv2, img2) 
+#            mask_color_id += 1
+#        cv2.imwrite(img_name + str(mask_color_id) + '.png', img2)
+#    cv2.imwrite(img_name + '.png', img)
+    return outer_list, inner_list
     
 if __name__ == "__main__":
     data = json.loads(open('4.json', 'r').read())
