@@ -40,7 +40,7 @@ def do_db_scan(boxes, index, img_name):
         distances = pairwise_distances(X, metric = vertical_more_imp)
     elif index == 1:
         distances = pairwise_distances(X, metric = balanced)
-    db = cluster.DBSCAN(eps=0.15, min_samples=1, n_jobs=-3, metric='precomputed').fit(distances)
+    db = cluster.DBSCAN(eps=0.30, min_samples=1, n_jobs=-3, metric='precomputed').fit(distances)
     return img, db
 
 def calculate_boundaries(value: list):
@@ -52,7 +52,7 @@ def calculate_boundaries(value: list):
     br = (right_xs, bottom_ys)
     return tl, br
 
-def print_rectangle(value, color_list, mask_color_id, cv2, img):
+def print_rectangle(value, color_list, mask_color_id, img):
     tl, br = calculate_boundaries(value)
     color = color_list[mask_color_id % len(color_list), 0:3]
     color = list(map(int, color))
@@ -93,8 +93,8 @@ def call(input_data: dict, img_name: str):
         value = list(value)
         tl, br = calculate_boundaries(value)
         outer_list.append(create_obj(tl, br, value))
-#        print_rectangle(value, color_list, mask_color_id, cv2, img)
-#        mask_color_id += 1
+        print_rectangle(value, color_list, mask_color_id, img)
+        mask_color_id += 1
         
         # do next clustering
         img2, db2 = do_db_scan(value, 1, img_name)
@@ -106,10 +106,10 @@ def call(input_data: dict, img_name: str):
             subsubvalue = list(subvalue)
             tl_i, br_i = calculate_boundaries(subsubvalue)
             inner_list.append(create_obj(tl_i, br_i, subsubvalue))
-#            print_rectangle(subsubvalue, color_list, mask_color_id, cv2, img2) 
-#            mask_color_id += 1
-#        cv2.imwrite(img_name + str(mask_color_id) + '.png', img2)
-#    cv2.imwrite(img_name + '.png', img)
+            print_rectangle(subsubvalue, color_list, mask_color_id, img2) 
+            mask_color_id += 1
+        cv2.imwrite(img_name + str(mask_color_id) + '.png', img2)
+    cv2.imwrite(img_name + '.png', img)
     return outer_list, inner_list
     
 if __name__ == "__main__":
