@@ -40,7 +40,7 @@ def do_db_scan(boxes, index, img_name):
         distances = pairwise_distances(X, metric = vertical_more_imp)
     elif index == 1:
         distances = pairwise_distances(X, metric = balanced)
-    db = cluster.DBSCAN(eps=0.17, min_samples=2, n_jobs=-3, metric='precomputed').fit(distances)
+    db = cluster.DBSCAN(eps=0.15, min_samples=2, n_jobs=-3, metric='precomputed').fit(distances)
     return img, db
 
 def calculate_boundaries(value: list):
